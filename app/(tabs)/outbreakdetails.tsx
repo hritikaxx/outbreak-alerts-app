@@ -1,13 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
-    Platform,
-    SafeAreaView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 export default function OutbreakDetails() {
@@ -28,61 +29,64 @@ export default function OutbreakDetails() {
 
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Outbreak Details</Text>
         <View style={styles.placeholder} />
       </View>
 
-      {/* Alert Info Card */}
-      <View style={styles.alertCard}>
-        <View style={styles.alertHeader}>
-          <View style={styles.warningIconContainer}>
-            <Ionicons name="warning" size={20} color="#fff" />
-          </View>
-          <View style={styles.alertTextContainer}>
-            <Text style={styles.alertText}>{disease} Detected</Text>
-            <Text style={styles.dateText}>{date}</Text>
-          </View>
-        </View>
-      </View>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
 
-      {/* Status Info Card */}
-      <View style={styles.statusCard}>
-        <Text style={styles.cardTitle}>Current Status</Text>
-        
-        <View style={styles.statusRow}>
-          <Text style={styles.statusLabel}>Risk Level</Text>
-          <Text style={styles.statusValue}>{riskLevel}</Text>
+        {/* Alert Info Card */}
+        <View style={styles.card}>
+          <View style={styles.alertHeader}>
+            <View style={styles.warningIconContainer}>
+              <Ionicons name="warning" size={20} color="#fff" />
+            </View>
+            <View style={styles.alertTextContainer}>
+              <Text style={styles.alertText}>{disease} Detected</Text>
+              <Text style={styles.dateText}>{date}</Text>
+            </View>
+          </View>
         </View>
-        
-        <View style={styles.statusRow}>
-          <Text style={styles.statusLabel}>Total Cases</Text>
-          <Text style={styles.statusValue}>{totalCases}</Text>
-        </View>
-        
-        <View style={styles.statusRow}>
-          <Text style={styles.statusLabel}>New Cases (24hr)</Text>
-          <Text style={styles.statusValue}>{newCases}</Text>
-        </View>
-        
-        <View style={styles.statusRow}>
-          <Text style={styles.statusLabel}>Affected Areas</Text>
-          <Text style={styles.statusValue}>{area}</Text>
-        </View>
-      </View>
 
-      {/* Safety Tips Button */}
-      <TouchableOpacity
-        style={styles.safetyButton}
-        onPress={() => router.push('/(tabs)/safetytips')}
-      >
-        <Text style={styles.safetyButtonText}>Safety Tips</Text>
-      </TouchableOpacity>
+        {/* Status Info Card */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Current Status</Text>
+
+          <View style={styles.infoList}>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Risk Level</Text>
+              <Text style={styles.infoValue}>{riskLevel}</Text>
+            </View>
+
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Total Cases</Text>
+              <Text style={styles.infoValue}>{totalCases}</Text>
+            </View>
+
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>New Cases (24hr)</Text>
+              <Text style={styles.infoValue}>{newCases}</Text>
+            </View>
+
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Affected Areas</Text>
+              <Text style={styles.infoValue}>{area}</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Safety Tips Button */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push('/(tabs)/safetytips')}
+        >
+          <Text style={styles.buttonText}>Safety Tips</Text>
+        </TouchableOpacity>
+
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -113,47 +117,24 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   placeholder: {
-    width: 32, // Same width as back button to center title
+    width: 32,
   },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    marginHorizontal: 20,
-    marginTop: 10,
-    marginBottom: 20,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    gap: 20, 
   },
-  searchIcon: {
-    marginRight: 12,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: '#000',
-  },
-  alertCard: {
+  card: {
     backgroundColor: '#E5E7EB',
-    marginHorizontal: 20,
-    marginBottom: 20,
     borderRadius: 16,
     padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    borderWidth: 0.5,
+    borderColor: '#1E40AF',
   },
   alertHeader: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 16,
   },
   warningIconContainer: {
     backgroundColor: '#1E40AF',
@@ -162,7 +143,6 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
   },
   alertTextContainer: {
     flex: 1,
@@ -171,58 +151,43 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#374151',
-    marginBottom: 4,
   },
   dateText: {
     fontSize: 14,
     color: '#374151',
-  },
-  statusCard: {
-    backgroundColor: '#E5E7EB',
-    marginHorizontal: 20,
-    marginBottom: 20,
-    borderRadius: 16,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    marginTop: 4,
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#374151',
     marginBottom: 16,
+    textAlign: 'center',
   },
-  statusRow: {
+  infoList: {
+    gap: 12,
+  },
+  infoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
   },
-  statusLabel: {
+  infoLabel: {
     fontSize: 16,
     color: '#374151',
   },
-  statusValue: {
+  infoValue: {
     fontSize: 16,
     fontWeight: '500',
     color: '#374151',
   },
-  safetyButton: {
+  button: {
     backgroundColor: '#1E40AF',
-    marginHorizontal: 20,
     borderRadius: 8,
     paddingVertical: 14,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
-  safetyButtonText: {
+  buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',

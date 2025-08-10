@@ -2,20 +2,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import {
-    Platform,
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
-export default function SafetyTips() {
+export default function SafetyTips() { 
   const router = useRouter();
 
-  const safetyTips = [
+  const safetyTips = [ 
     'Use mosquito repellent',
     'Remove standing water',
     'Watch for high fever',
@@ -31,7 +31,7 @@ export default function SafetyTips() {
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton}
-          onPress={() => router.back()}
+          onPress={() => router.push('/(tabs)/outbreakdetails')}
         >
           <Ionicons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    borderWidth: 0.5,
+    borderColor: '#1E40AF',
   },
   tipText: {
     fontSize: 16,
