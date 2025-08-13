@@ -190,4 +190,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#c40000ff',
   },
-});
+}); 
